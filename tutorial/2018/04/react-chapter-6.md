@@ -121,22 +121,22 @@ axios.interceptors.request.use(config => {
 ```
 axios.interceptors.response.use(config => {
   if (config.data && config.data[isSuccess] === false && config.data.error_info.code === 401) {
-    router.push('/login');
+    history.push('/login');
   }
   return config.data;
 }, (error) => {
   if (error && error.response) {
     switch (error.response.status) {
       case 500:
-        router.push('/500');
+        history.push('/500');
         message.error(codeMessage[error.response.status]);
         break;
       case 403:
-        router.push('/403');
+        history.push('/403');
         message.error(codeMessage[error.response.status]);
         break;
       case 404:
-        router.push('/404');
+        history.push('/404');
         message.error(codeMessage[error.response.status]);
         break;
       default:

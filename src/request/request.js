@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { message } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 import api from './api';
 import { isSuccess, platformToken } from '../common/globalConstant';
 
@@ -47,22 +47,22 @@ axios.interceptors.request.use(config => {
 // 返回拦截器
 axios.interceptors.response.use(config => {
   if (config.data && config.data[isSuccess] === false && config.data.error_info.code === 401) {
-    router.push('/login');
+    history.push('/login');
   }
   return config.data;
 }, (error) => {
   if (error && error.response) {
     switch (error.response.status) {
       case 500:
-        router.push('/500');
+        history.push('/500');
         message.error(codeMessage[error.response.status]);
         break;
       case 403:
-        router.push('/403');
+        history.push('/403');
         message.error(codeMessage[error.response.status]);
         break;
       case 404:
-        router.push('/404');
+        history.push('/404');
         message.error(codeMessage[error.response.status]);
         break;
       default:

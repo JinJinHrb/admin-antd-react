@@ -16,7 +16,7 @@ class ComponentName extends Component {
   componentDidMount() {
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
   }
 
   componentWillUnmount() {

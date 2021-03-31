@@ -47,7 +47,7 @@ export default {
       if (response && response[isSuccess] === true) {
         const token = response.result.token;
         sessionStorage.setItem(platformToken, token);
-        router.push('/');
+        history.push('/');
       } else if (response && response[isSuccess] === false) {
         message.error(response.error_info.msg);
       }

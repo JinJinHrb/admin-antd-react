@@ -33,7 +33,7 @@ class Index extends Component {
     // 获得全部权限树
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
 
   }
 

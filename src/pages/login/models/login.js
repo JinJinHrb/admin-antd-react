@@ -1,6 +1,6 @@
 import { login } from '../services/index';
 import { message } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 import { isSuccess, platformToken } from '../../../common/globalConstant';
 
 export default {
@@ -13,7 +13,7 @@ export default {
       if (response && response[isSuccess] === true) {
         const token = response.result.token;
         sessionStorage.setItem(platformToken, token);
-        router.push('/');
+        history.push('/');
       } else if (response && response[isSuccess] === false) {
         message.error(response.error_info.msg);
       }

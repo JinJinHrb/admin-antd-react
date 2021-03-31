@@ -1,5 +1,5 @@
 import request from '../request/request';
-import router from 'umi/router';
+import { history } from 'umi';
 import { message } from 'antd';
 import { isSuccess, platformToken } from '../common/globalConstant';
 
@@ -17,7 +17,7 @@ export default {
       const response = yield call(logout, payload);
       if (response && response[isSuccess] === true) {
         sessionStorage.removeItem(platformToken);
-        router.push('/login');
+        history.push('/login');
       } else {
         message.error(response.error_info.msg);
       }

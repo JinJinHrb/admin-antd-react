@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Menu, Icon, Spin} from 'antd';
-import Link from 'umi/link';
+import {Link} from 'umi';
 import {getMenu} from '../common/menu';
 
 

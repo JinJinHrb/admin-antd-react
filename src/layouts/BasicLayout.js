@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Icon, Dropdown, Avatar, Menu, Spin } from 'antd';
-import router from 'umi/router';
+// import { history } from 'umi';
 import { connect } from 'dva';
 import RouterTabs from '../component/RouterTabs';
 import SideBar from './side';

@@ -27,7 +27,7 @@ class ComponentName extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.visible === false) {
       tag = true;
       this.setState({ fileList: [] });
