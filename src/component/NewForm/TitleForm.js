@@ -10,7 +10,7 @@ class ComponentName extends Component {
     this.state = {};
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
   }
 
   componentDidMount() {

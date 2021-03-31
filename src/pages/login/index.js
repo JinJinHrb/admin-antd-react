@@ -18,7 +18,7 @@ class Index extends Component {
     super(props);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
 
   }
 

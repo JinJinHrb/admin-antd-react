@@ -18,7 +18,7 @@ class Side extends Component {
     this.props.onOpenChange(e[1]);
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({loading: true});
 
     if (sessionStorage.getItem('selectedKeys')) {
@@ -26,6 +26,10 @@ class Side extends Component {
 
     }
     getMenu((res) => {
+        if(!res){
+            res = [];
+        }
+
       const selectKey = sessionStorage.getItem('selectedKeys')
       const recursive = (data, name) => {
         for (let i = 0; i < data.length; i++) {

@@ -36,7 +36,7 @@ class RouterTabs extends Component {
     return routerConfig[pathname] ? routerConfig[pathname] : { name: '暂无标签' };
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (sessionStorage.getItem('refsTag')) {
       this.setState({
         currentPageName: JSON.parse(sessionStorage.getItem('currentPageName')),
