@@ -13,10 +13,6 @@ const modelPlatformLogin = 'loginToNamespace/platformLogin';
   submitLoading: loading.effects[modelPlatformLogin],
 }))
 class Index extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   UNSAFE_componentWillMount() {}
 
   componentDidMount() {}
@@ -51,7 +47,7 @@ class Index extends Component {
           </div>
           <div className={styles['clear']} />
           <div className={styles['avtar']}>
-            <img src={avatar} />
+            <img src={avatar} alt={'no-avatar'} />
           </div>
           <form>
             <input

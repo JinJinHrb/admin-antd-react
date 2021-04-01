@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Layout, Dropdown, Avatar, Menu, Spin } from 'antd';
-import { Icon } from '@ant-design/compatible';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 // import { history } from 'umi';
 import { connect } from 'dva';
 import RouterTabs from '../component/RouterTabs';
 import SideBar from './side';
 import styles from './index.css';
+import MenuUnfoldOutlined from '@ant-design/icons/MenuUnfoldOutlined';
+import MenuFoldOutlined from '@ant-design/icons/MenuFoldOutlined';
 
 const { Header, /* Footer, */ Sider, Content } = Layout;
 
@@ -112,11 +113,11 @@ class BasicLayout extends Component {
           </Sider>
           <Layout>
             <Header style={{ background: '#FFF', padding: 0 }}>
-              <Icon
-                className={styles.trigger}
-                type={'menu-unfold'}
-                onClick={this.toggleCollapsed}
-              />
+              {collapsed ? (
+                <MenuUnfoldOutlined className={styles.trigger} onClick={this.toggleCollapsed} />
+              ) : (
+                <MenuFoldOutlined className={styles.trigger} onClick={this.toggleCollapsed} />
+              )}
               <UserMenu props={this.props} />
             </Header>
             <Content>

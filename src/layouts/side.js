@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Menu, Spin } from 'antd';
-import { Icon } from '@ant-design/compatible';
 import { Link } from 'umi';
 import { getMenu } from '../common/menu';
+import _L from 'lodash';
+import DynamicIcon from '../component/DynamicIcon/DynamicIcon';
 
 const SubMenu = Menu.SubMenu;
 
@@ -79,22 +80,27 @@ class Side extends Component {
 }
 
 const MenuItem = (data) => {
+  const icon = _L.trim(data.icon);
+  const iconKey = icon ? _L.upperFirst(_L.camelCase(icon)) + 'Outlined' : '';
   return (
     <Menu.Item key={data.path}>
       <Link to={data.path}>
-        <Icon type={data.icon} />
+        <DynamicIcon type={iconKey} />
         <span>{data.name}</span>
       </Link>
     </Menu.Item>
   );
 };
+
 const SubMenuItem = (data) => {
+  const icon = _L.trim(data.icon);
+  const iconKey = icon ? _L.upperFirst(_L.camelCase(icon)) + 'Outlined' : '';
   return (
     <SubMenu
       key={data.name}
       title={
         <span>
-          <Icon type={data.icon} />
+          <DynamicIcon type={iconKey} />
           <span>{data.name}</span>
         </span>
       }
