@@ -1,3 +1,7 @@
 {
-  "extends": "eslint-config-umi"
+  "extends": "eslint-config-umi",
+
+  "rules": {
+    "no-default-export": 1
+  }
 }
