@@ -4,6 +4,10 @@ import { ItemInput, ItemSelect } from '../../component/FormItemComponent';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import styles from './search.less';
+import SearchOutlined from '@ant-design/icons/SearchOutlined';
+import Loading3QuartersOutlined from '@ant-design/icons/Loading3QuartersOutlined';
+import DownOutlined from '@ant-design/icons/DownOutlined';
+import UpOutlined from '@ant-design/icons/UpOutlined';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -218,18 +222,18 @@ class Search extends Component {
                 htmlType="submit"
                 onClick={this.submit}
                 type="primary"
-                icon="search"
+                icon={<SearchOutlined />}
               >
                 搜索
               </Button>
               <span> </span>
-              <Button onClick={this.reset} icon="loading-3-quarters">
+              <Button onClick={this.reset} icon={<Loading3QuartersOutlined />}>
                 重置
               </Button>
               <span> </span>
               <Button
                 onClick={this.expand}
-                icon={!expand ? 'down' : 'up'}
+                icon={!expand ? <DownOutlined /> : <UpOutlined />}
                 style={{ display: options.length > size ? 'inline-block' : 'none' }}
               >
                 {!expand ? '展开所有' : '收起所有'}

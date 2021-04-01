@@ -8,7 +8,7 @@ import RouterTabs from '../component/RouterTabs';
 import SideBar from './side';
 import styles from './index.css';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, /* Footer, */ Sider, Content } = Layout;
 
 const UserMenu = (props) => {
   const handleMenuClick = ({ key }) => {
