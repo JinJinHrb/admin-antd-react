@@ -9,12 +9,13 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-class HehTable extends Component {
+// class HehTable extends Component {
+class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       expand: false,
-      reset: false
+      reset: false,
     };
   }
 
@@ -23,27 +24,34 @@ class HehTable extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const options = this.props.options;
-        options && options.forEach(item => {
-          switch (item.type) {
-            case 'date' :
-              if (values[`${item.id}`]) {
-                values[`${item.id}`] = values[`${item.id}`].format(item.format || 'YYYY-MM-DD HH:mm:ss');
-              }
-              break;
-            case 'rangeDate' :
-              if (values[item.id]) {
-                const min_create_date = values[item.id][0].valueOf();
-                const max_create_date = values[item.id][1].valueOf();
-                values[item.id][0] = values[item.id][0].format(item.format || 'YYYY-MM-DD HH:mm:ss');
-                values[item.id][1] = values[item.id][1].format(item.format || 'YYYY-MM-DD HH:mm:ss');
-                values['min_create_date'] = min_create_date;
-                values['max_create_date'] = max_create_date;
-              }
-              break;
-            default :
-              break;
-          }
-        });
+        options &&
+          options.forEach((item) => {
+            switch (item.type) {
+              case 'date':
+                if (values[`${item.id}`]) {
+                  values[`${item.id}`] = values[`${item.id}`].format(
+                    item.format || 'YYYY-MM-DD HH:mm:ss'
+                  );
+                }
+                break;
+              case 'rangeDate':
+                if (values[item.id]) {
+                  const min_create_date = values[item.id][0].valueOf();
+                  const max_create_date = values[item.id][1].valueOf();
+                  values[item.id][0] = values[item.id][0].format(
+                    item.format || 'YYYY-MM-DD HH:mm:ss'
+                  );
+                  values[item.id][1] = values[item.id][1].format(
+                    item.format || 'YYYY-MM-DD HH:mm:ss'
+                  );
+                  values['min_create_date'] = min_create_date;
+                  values['max_create_date'] = max_create_date;
+                }
+                break;
+              default:
+                break;
+            }
+          });
         for (let i in values) {
           if (values.hasOwnProperty(i)) {
             if (values[i] === undefined || values[i] === 'created' || values[i] === null) {
@@ -56,7 +64,7 @@ class HehTable extends Component {
     });
   };
   reset = () => {
-    this.setState({reset: true});
+    this.setState({ reset: true });
     this.props.form.resetFields();
     this.props.getSearchValue();
   };
@@ -65,9 +73,9 @@ class HehTable extends Component {
   };
   JudgeWidth = () => {
     const width = document.body.clientWidth;
-    if(width >= 1600) return 'xxl';
-    if(width >= 1200) return 'xl';
-    if(width >= 768) return 'md';
+    if (width >= 1600) return 'xxl';
+    if (width >= 1200) return 'xl';
+    if (width >= 768) return 'md';
     return 'xs';
   };
   hehInput = (layout, item, index, disabled, defaultValue) => {
@@ -80,7 +88,9 @@ class HehTable extends Component {
         xl={8}
         xxl={6}
         key={item.key}
-        style={{display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block'}}
+        style={{
+          display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
+        }}
       >
         <ItemInput
           id={item.id}
@@ -103,7 +113,9 @@ class HehTable extends Component {
         xl={8}
         xxl={6}
         key={item.key}
-        style={{ display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block' }}
+        style={{
+          display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
+        }}
       >
         <ItemSelect
           id={item.id}
@@ -118,12 +130,11 @@ class HehTable extends Component {
       </Col>
     );
   };
-  hehData = (layout, item, index,defaultValue) => {
+  hehData = (layout, item, index, defaultValue) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
-    const { getFieldDecorator } = this.props.form;
     let newDefaultValue;
-    if(defaultValue && defaultValue[item.id]){
+    if (defaultValue && defaultValue[item.id]) {
       let defaultValueArr = defaultValue[item.id];
       newDefaultValue = moment(defaultValueArr);
     }
@@ -134,29 +145,22 @@ class HehTable extends Component {
         md={12}
         xxl={6}
         key={item.key}
-        style={{ display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block' }}
+        style={{
+          display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
+        }}
       >
-        <FormItem
-          {...layout}
-          label={item.name}
-        >
-          {
-            getFieldDecorator(item.id,{
-              initialValue: this.state.reset !== true ? newDefaultValue : null
-            })(
-              <DatePicker placeholder='请选择日期' style={{ width: '100%' }}/>,
-            )
-          }
+        {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
+        <FormItem name={item.id} {...layout} label={item.name}>
+          <DatePicker placeholder="请选择日期" style={{ width: '100%' }} />
         </FormItem>
       </Col>
     );
   };
-  hehRangeData = (layout, item, index,defaultValue) => {
+  hehRangeData = (layout, item, index, defaultValue) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
-    const { getFieldDecorator } = this.props.form;
     let newDefaultValue = [];
-    if(defaultValue){
+    if (defaultValue) {
       let defaultValueArr = defaultValue[item.id];
       newDefaultValue = [moment(defaultValueArr[0]), moment(defaultValueArr[1])];
     }
@@ -167,19 +171,13 @@ class HehTable extends Component {
         md={12}
         xxl={6}
         key={item.key}
-        style={{ display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block' }}
+        style={{
+          display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
+        }}
       >
-        <FormItem
-          {...layout}
-          label={item.name}
-        >
-          {
-            getFieldDecorator(item.id,{
-              initialValue: this.state.reset !== true ? newDefaultValue : null
-            })(
-              <RangePicker placeholder={['开始时间', '结束时间']} style={{ width: '100%' }}/>,
-            )
-          }
+        {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
+        <FormItem name={item.id} {...layout} label={item.name}>
+          <RangePicker placeholder={['开始时间', '结束时间']} style={{ width: '100%' }} />
         </FormItem>
       </Col>
     );
@@ -199,38 +197,42 @@ class HehTable extends Component {
         <Form onSubmit={this.submit}>
           {/*组件*/}
           <Row>
-            {
-              options && options.map((item, index) => {
-                return (
-                  item.type === 'input' ?
-                    this.hehInput(layout, item, index, false, defaultValue)
-                    : item.type === 'select' ?
-                    this.hehSelect(layout, item, index,false, defaultValue)
-                    : item.type === 'date' ?
-                      this.hehData(layout, item, index, defaultValue)
-                      : item.type === 'rangeDate' ?
-                        this.hehRangeData(layout, item, index, defaultValue)
-                        : ''
-                );
-              })
-            }
+            {options &&
+              options.map((item, index) => {
+                return item.type === 'input'
+                  ? this.hehInput(layout, item, index, false, defaultValue)
+                  : item.type === 'select'
+                  ? this.hehSelect(layout, item, index, false, defaultValue)
+                  : item.type === 'date'
+                  ? this.hehData(layout, item, index, defaultValue)
+                  : item.type === 'rangeDate'
+                  ? this.hehRangeData(layout, item, index, defaultValue)
+                  : '';
+              })}
           </Row>
           {/*按钮组*/}
           <Row>
             <Col span={24} className={styles.btnGroup}>
-              <Button loading={searchLoading} htmlType="submit" onClick={this.submit} type='primary'
-                      icon='search'>搜索</Button>
+              <Button
+                loading={searchLoading}
+                htmlType="submit"
+                onClick={this.submit}
+                type="primary"
+                icon="search"
+              >
+                搜索
+              </Button>
               <span> </span>
-              <Button onClick={this.reset} icon='loading-3-quarters'>重置</Button>
+              <Button onClick={this.reset} icon="loading-3-quarters">
+                重置
+              </Button>
               <span> </span>
               <Button
                 onClick={this.expand}
                 icon={!expand ? 'down' : 'up'}
                 style={{ display: options.length > size ? 'inline-block' : 'none' }}
               >
-                {
-                  !expand ? '展开所有' : '收起所有'
-                }
+                {!expand ? '展开所有' : '收起所有'}
               </Button>
             </Col>
           </Row>
@@ -240,5 +242,5 @@ class HehTable extends Component {
   }
 }
 
-const Search = Form.create()(HehTable);
+// const Search = Form.create()(HehTable);
 export default Search;

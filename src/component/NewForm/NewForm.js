@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button, Upload, Icon, Spin } from 'antd';
+import _L from 'lodash';
 
 import {
   ItemInput,
@@ -18,7 +19,8 @@ const FormItem = Form.Item;
 
 let tag = true;
 
-class ComponentName extends Component {
+// class ComponentName extends Component {
+class ModalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -126,7 +128,7 @@ class ComponentName extends Component {
         ]}
       >
         <Spin spinning={detailLoading}>
-          <Form layout="vertical">
+          <Form layout="vertical" defaultValues={defaultValue}>
             {options &&
               options.map((item) => {
                 return item.type === 'textarea' ? (
@@ -235,34 +237,34 @@ class ComponentName extends Component {
                     disabled={disabled}
                   />
                 ) : item.type === 'uploadImg' ? (
-                  <FormItem key={item.key} label={item.name}>
-                    {form.getFieldDecorator(item.id, {
-                      initialValue: defaultValue && defaultValue[item.id],
-                      rules: [{ required: !!item.required, message: '必填项未填' }],
-                    })(
-                      <Upload
-                        // action={api.target + api.imageUpload}
-                        listType="picture"
-                        className={item.inline ? 'upload-list-inline' : ''}
-                        fileList={this.state.fileList}
-                        disabled={disabled}
-                        onChange={this.imageChange}
-                        onPreview={onPreview}
-                        multiple={!!item.multiple}
+                  <FormItem
+                    key={item.key}
+                    label={item.name}
+                    name={item.id}
+                    rules={[{ required: item.required, message: '必填项未填' }]}
+                  >
+                    <Upload
+                      // action={api.target + api.imageUpload}
+                      listType="picture"
+                      className={item.inline ? 'upload-list-inline' : ''}
+                      fileList={this.state.fileList}
+                      disabled={disabled}
+                      onChange={this.imageChange}
+                      onPreview={onPreview}
+                      multiple={!!item.multiple}
+                    >
+                      <Button
+                        disabled={
+                          disabled
+                            ? true
+                            : item.length
+                            ? this.state.fileList.length >= item.length
+                            : this.state.fileList.length >= 1
+                        }
                       >
-                        <Button
-                          disabled={
-                            disabled
-                              ? true
-                              : item.length
-                              ? this.state.fileList.length >= item.length
-                              : this.state.fileList.length >= 1
-                          }
-                        >
-                          {/* <Icon type="upload"/> 上传 */}
-                        </Button>
-                      </Upload>
-                    )}
+                        <Icon type="upload" /> 上传
+                      </Button>
+                    </Upload>
                   </FormItem>
                 ) : (
                   ''
@@ -275,5 +277,5 @@ class ComponentName extends Component {
   }
 }
 
-const ModalForm = Form.create()(ComponentName);
+// const ModalForm = Form.create()(ComponentName);
 export default ModalForm;
