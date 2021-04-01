@@ -17,13 +17,15 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
-    "lint-staged": "^7.2.2",
+    "lint-staged": "10.0.7",
     "umi": "3"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
     ]
   },
   "engines": {
@@ -33,6 +35,7 @@
     "@antv/g2": "^3.3.3",
     "axios": "^0.18.0",
     "qs": "^6.6.0",
-    "roadhog-api-doc": "^1.1.2"
+    "roadhog-api-doc": "^1.1.2",
+    "typescript": "^4.2.3"
   }
 }
