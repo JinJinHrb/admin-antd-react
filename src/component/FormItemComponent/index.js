@@ -72,7 +72,7 @@ export class ItemSelect extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule, options } = this.props;
+    const { id, name, layout, defaultValue, disabled, rule, options } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
@@ -81,7 +81,7 @@ export class ItemSelect extends PureComponent {
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
       >
-        <Select diabled={disabled}>
+        <Select disabled={disabled}>
           {options &&
             options.map((data, index) => (
               <Option key={index} value={data.id || data.key}>

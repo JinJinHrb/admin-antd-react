@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Icon, message, Spin } from 'antd';
+import { message, Spin } from 'antd';
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 import _ from 'lodash';
 import { connect } from 'dva';
 import avatar from './images/avatar.png';
 import styles from './css/styles.less';
 
-
 const modelPlatformLogin = 'loginToNamespace/platformLogin';
-
 
 @connect(({ loginToNamespace, loading }) => ({
   loginToNamespace,
@@ -18,14 +17,9 @@ class Index extends Component {
     super(props);
   }
 
-  UNSAFE_componentWillMount() {
+  UNSAFE_componentWillMount() {}
 
-  }
-
-  componentDidMount() {
-
-  }
-
+  componentDidMount() {}
 
   eventSubmit = () => {
     const username = _.trim(this.refs.username.value);
@@ -45,27 +39,37 @@ class Index extends Component {
 
   render() {
     const { submitLoading } = this.props;
-    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin/>;
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} />;
     return (
       <div className={styles['login']}>
         <div className={styles['login-form']}>
-          <div className={styles['close']}/>
+          <div className={styles['close']} />
           <div className={styles['head-info']}>
-            <label className={styles['lbl-1']}/>
-            <label className={styles['lbl-2']}/>
-            <label className={styles['lbl-3']}/>
+            <label className={styles['lbl-1']} />
+            <label className={styles['lbl-2']} />
+            <label className={styles['lbl-3']} />
           </div>
-          <div className={styles['clear']}/>
+          <div className={styles['clear']} />
           <div className={styles['avtar']}>
-            <img src={avatar}/>
+            <img src={avatar} />
           </div>
           <form>
-            <input ref='username' type="text" className={styles['text']} placeholder={'username'} defaultValue='admin'/>
-            <input ref='password' type="password" placeholder={'password'} defaultValue='123456'/>
+            <input
+              ref="username"
+              type="text"
+              className={styles['text']}
+              placeholder={'username'}
+              defaultValue="admin"
+            />
+            <input ref="password" type="password" placeholder={'password'} defaultValue="123456" />
           </form>
           <div className={styles['signin']}>
             <Spin indicator={antIcon} spinning={submitLoading === true}>
-              <input onClick={this.eventSubmit} type="submit" value={submitLoading === true ? '正在登陆...' : '登陆'}/>
+              <input
+                onClick={this.eventSubmit}
+                type="submit"
+                value={submitLoading === true ? '正在登陆...' : '登陆'}
+              />
             </Spin>
           </div>
         </div>
@@ -74,7 +78,4 @@ class Index extends Component {
   }
 }
 
-
 export default Index;
-
-

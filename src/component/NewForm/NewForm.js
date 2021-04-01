@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Modal, Form, Button, Upload, Icon, Spin } from 'antd';
-import _L from 'lodash';
+import { Modal, Form, Button, Upload, Spin } from 'antd';
+import { CloudUploadOutlined } from '@ant-design/icons/CloudUploadOutlined';
 
 import {
   ItemInput,
@@ -261,8 +261,9 @@ class ModalForm extends Component {
                             ? this.state.fileList.length >= item.length
                             : this.state.fileList.length >= 1
                         }
+                        icon={<CloudUploadOutlined />}
                       >
-                        <Icon type="upload" /> 上传
+                        上传
                       </Button>
                     </Upload>
                   </FormItem>

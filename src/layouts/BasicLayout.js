@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Icon, Dropdown, Avatar, Menu, Spin } from 'antd';
+import { Layout, Dropdown, Avatar, Menu, Spin } from 'antd';
+import { Icon } from '@ant-design/compatible';
+import UserOutlined from '@ant-design/icons/UserOutlined';
 // import { history } from 'umi';
 import { connect } from 'dva';
 import RouterTabs from '../component/RouterTabs';
@@ -26,7 +28,7 @@ const UserMenu = (props) => {
   );
   return (
     <Dropdown overlay={menu}>
-      <Avatar className={styles.avatar} icon="user" />
+      <Avatar className={styles.avatar} icon={<UserOutlined />} />
     </Dropdown>
   );
 };

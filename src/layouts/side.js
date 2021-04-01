@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Menu, Icon, Spin } from 'antd';
+import { Menu, Spin } from 'antd';
+import { Icon } from '@ant-design/compatible';
 import { Link } from 'umi';
 import { getMenu } from '../common/menu';
 
@@ -81,7 +82,7 @@ const MenuItem = (data) => {
   return (
     <Menu.Item key={data.path}>
       <Link to={data.path}>
-        {/* <Icon type={data.icon}/> */}
+        <Icon type={data.icon} />
         <span>{data.name}</span>
       </Link>
     </Menu.Item>
@@ -93,7 +94,7 @@ const SubMenuItem = (data) => {
       key={data.name}
       title={
         <span>
-          {/* <Icon type={data.icon}/> */}
+          <Icon type={data.icon} />
           <span>{data.name}</span>
         </span>
       }

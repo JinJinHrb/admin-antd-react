@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import classNames from 'classnames';
 import { connect } from 'dva';
-import _ from 'lodash';
-import { Tag, Dropdown, Icon, Tooltip, Menu } from 'antd';
+import _L from 'lodash';
+import { Tag, Dropdown, Tooltip, Menu } from 'antd';
 import styles from './index.less';
 import { withRouter } from 'react-router-dom';
 import { getMenu } from '../../common/menu';
+import DownOutlined from '@ant-design/icons/DownOutlined';
 
 const { SubMenu } = Menu;
 
@@ -231,7 +232,7 @@ class RouterTabs extends Component {
         );
       }
     });
-    this.tags = _.compact(tags);
+    this.tags = _L.compact(tags);
     /* eslint-disable */
     return (
       <div
@@ -289,7 +290,8 @@ class RouterTabs extends Component {
             }
           >
             <Tag size={'small'} color="#2d8cf0" style={{ marginLeft: 12 }}>
-              {/* 标签选项 <Icon type="down"/> */}
+              标签选项
+              <DownOutlined style={{ marginLeft: 4 }} />
             </Tag>
           </Dropdown>
         </div>

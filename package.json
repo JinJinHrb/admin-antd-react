@@ -34,6 +34,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@ant-design/compatible": "^1.0.8",
     "@antv/g2": "^3.3.3",
     "axios": "^0.18.0",
     "lodash": "^4.17.21",

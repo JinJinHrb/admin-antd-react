@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, LocaleProvider } from 'antd';
+import { Table, ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 export default class HehTable extends Component {
@@ -10,8 +10,7 @@ export default class HehTable extends Component {
     };
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   onSelectChange = (selectedRowKeys) => {
     this.setState({ selectedRowKeys });
@@ -22,13 +21,21 @@ export default class HehTable extends Component {
   };
 
   render() {
-    const { dataSource, columns, onShowSizeChange, pageChange, loading, size, bordered } = this.props;
+    const {
+      dataSource,
+      columns,
+      onShowSizeChange,
+      pageChange,
+      loading,
+      size,
+      bordered,
+    } = this.props;
     const rowSelection = {
       selectedRowKeys: this.state.selectedRowKeys,
       onChange: this.onSelectChange,
     };
     return (
-      <LocaleProvider locale={zhCN}>
+      <ConfigProvider locale={zhCN}>
         <Table
           style={{ background: '#FFF' }}
           size={size}
@@ -46,12 +53,12 @@ export default class HehTable extends Component {
             showQuickJumper: true,
             style: { margin: 15 },
             size: 'default',
-            showTotal: (total => `共 ${total} 条`),
+            showTotal: (total) => `共 ${total} 条`,
           }}
           loading={loading}
-          rowKey='id'
+          rowKey="id"
         />
-      </LocaleProvider>
+      </ConfigProvider>
     );
   }
 }
