@@ -8,6 +8,8 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.168",
+    "@types/qs": "^6.9.6",
     "@umijs/preset-react": "^1.8.3",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.4.0",
@@ -34,6 +36,7 @@
   "dependencies": {
     "@antv/g2": "^3.3.3",
     "axios": "^0.18.0",
+    "lodash": "^4.17.21",
     "qs": "^6.6.0",
     "roadhog-api-doc": "^1.1.2",
     "typescript": "^4.2.3"

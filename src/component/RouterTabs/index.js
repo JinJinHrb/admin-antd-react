@@ -10,7 +10,6 @@ import { getMenu } from '../../common/menu';
 
 const { SubMenu } = Menu;
 
-
 @withRouter
 @connect(({ global }) => ({ global }))
 class RouterTabs extends Component {
@@ -44,12 +43,12 @@ class RouterTabs extends Component {
         searchMap: JSON.parse(sessionStorage.getItem('searchMap')),
       });
     }
-    getMenu(res => {
+    getMenu((res) => {
       const newObj = {};
       if (res && res.length !== 0) {
-        res.forEach(item => {
+        res.forEach((item) => {
           if (item.children) {
-            item.children.forEach(child => {
+            item.children.forEach((child) => {
               newObj[child.path] = { name: child.name };
             });
           } else {
@@ -117,8 +116,7 @@ class RouterTabs extends Component {
     let dom;
     try {
       // eslint-disable-next-line react/no-find-dom-node
-      dom = ReactDom.findDOMNode(this)
-        .querySelector(`[data-key="${pathname}"]`);
+      dom = ReactDom.findDOMNode(this).querySelector(`[data-key="${pathname}"]`);
       if (dom === null) {
         // 菜单 还没有假如 导航条(横)
       } else {
@@ -135,7 +133,7 @@ class RouterTabs extends Component {
     const { history } = this.props;
     let { currentPageName } = this.state;
     const { searchMap } = this.state;
-    const newRefsTag = [...this.state.refsTag.filter(t => t !== tag)];
+    const newRefsTag = [...this.state.refsTag.filter((t) => t !== tag)];
     if (currentPageName === tag) {
       currentPageName = this.state.refsTag[this.state.refsTag.indexOf(tag) - 1];
     }
@@ -163,7 +161,9 @@ class RouterTabs extends Component {
     if (tag !== this.state.currentPageName) {
       this.props.history.push({
         pathname: tag,
-        search: this.state.searchMap[tag] ? this.state.searchMap[tag].replace(/from=[^&]+&?/, '') : undefined,
+        search: this.state.searchMap[tag]
+          ? this.state.searchMap[tag].replace(/from=[^&]+&?/, '')
+          : undefined,
       });
     }
   };
@@ -213,74 +213,88 @@ class RouterTabs extends Component {
           <Tag
             key={pathname}
             data-key={pathname}
-            className={classNames(styles.tag,
-              { [styles.active]: pathname === currentPageName })}
-            onClick={e => this.handleClickTag(pathname, e)}
+            className={classNames(styles.tag, { [styles.active]: pathname === currentPageName })}
+            onClick={(e) => this.handleClickTag(pathname, e)}
             closable={index !== 0}
-            afterClose={() => this.handleClose(pathname)}
+            onClose={() => this.handleClose(pathname)}
           >
-            <span className={styles.icon}/>{isLongTag ? `${title.slice(
-            0, 30)}...` : title}
+            <span className={styles.icon} />
+            {isLongTag ? `${title.slice(0, 30)}...` : title}
           </Tag>
         );
-        return isLongTag
-          ? <Tooltip title={title} key={`tooltip_${pathname}`}>{tagElem}</Tooltip>
-          : tagElem;
+        return isLongTag ? (
+          <Tooltip title={title} key={`tooltip_${pathname}`}>
+            {tagElem}
+          </Tooltip>
+        ) : (
+          tagElem
+        );
       }
     });
     this.tags = _.compact(tags);
     /* eslint-disable */
     return (
-      <div className={cls} style={{
-        ...style,
-        height: '40px',
-        maxHeight: '40px',
-        lineHeight: '40px',
-        marginRight: '-12px',
-      }}>
-        <div style={{
-          flex: '1',
+      <div
+        className={cls}
+        style={{
+          ...style,
           height: '40px',
-          position: 'relative',
-          overflow: 'hidden',
-          background: '#f0f0f0',
-          padding: '0px 0px',
-        }}>
-          <div style={{
-            position: 'absolute',
-            whiteSpace: 'nowrap',
-            width: '100%',
-            top: '0px',
-            padding: '0px 10px 0px 10px',
-            overflowX: 'auto',
-          }}>
+          maxHeight: '40px',
+          lineHeight: '40px',
+          marginRight: '-12px',
+        }}
+      >
+        <div
+          style={{
+            flex: '1',
+            height: '40px',
+            position: 'relative',
+            overflow: 'hidden',
+            background: '#f0f0f0',
+            padding: '0px 0px',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              whiteSpace: 'nowrap',
+              width: '100%',
+              top: '0px',
+              padding: '0px 10px 0px 10px',
+              overflowX: 'auto',
+            }}
+          >
             {this.tags}
           </div>
         </div>
-        <div style={{
-          width: '96px',
-          height: '100%',
-          background: '#fff',
-          boxShadow: '-3px 0 15px 3px rgba(0,0,0,.1)',
-        }}>
-          <Dropdown overlay={<Menu onClick={this.handleMenuClick}>
-            <Menu.Item key="1">关闭所有</Menu.Item>
-            <Menu.Item key="2">关闭其他</Menu.Item>
-            <SubMenu title="切换标签">
-              {
-                this.tags.map(item => (<Menu.Item key={item.key}>{item.props.children}</Menu.Item>))
-              }
-            </SubMenu>
-          </Menu>}
+        <div
+          style={{
+            width: '96px',
+            height: '100%',
+            background: '#fff',
+            boxShadow: '-3px 0 15px 3px rgba(0,0,0,.1)',
+          }}
+        >
+          <Dropdown
+            overlay={
+              <Menu onClick={this.handleMenuClick}>
+                <Menu.Item key="1">关闭所有</Menu.Item>
+                <Menu.Item key="2">关闭其他</Menu.Item>
+                <SubMenu title="切换标签">
+                  {this.tags.map((item) => (
+                    <Menu.Item key={item.key}>{item.props.children}</Menu.Item>
+                  ))}
+                </SubMenu>
+              </Menu>
+            }
           >
-            <Tag size={'small'} color="#2d8cf0"
-                 style={{ marginLeft: 12 }}>
-              标签选项 <Icon type="down"/>
+            <Tag size={'small'} color="#2d8cf0" style={{ marginLeft: 12 }}>
+              {/* 标签选项 <Icon type="down"/> */}
             </Tag>
           </Dropdown>
         </div>
       </div>
     );
   }
-};
+}
 export default RouterTabs;
