@@ -10,7 +10,7 @@ import {
   Radio,
   Switch,
 } from 'antd';
-import moment from 'moment';
+// import moment from 'moment';
 
 const FormItem = Form.Item;
 
@@ -24,7 +24,7 @@ export class ItemInput extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id],
       <FormItem
@@ -49,7 +49,7 @@ export class ItemTextArea extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule, rows } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule, rows } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
@@ -72,7 +72,7 @@ export class ItemSelect extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, defaultValue, disabled, rule, options } = this.props;
+    const { id, name, layout, /* defaultValue, */ disabled, rule, options } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
@@ -98,7 +98,7 @@ export class ItemDate extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id] && moment(defaultValue[id])
       <FormItem
@@ -117,7 +117,7 @@ export class ItemNumber extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
@@ -136,15 +136,15 @@ export class ItemRangeDate extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule } = this.props;
-    let newDefaultValue = defaultValue[id];
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule } = this.props;
+    /* let newDefaultValue = defaultValue[id];
     if (newDefaultValue) {
       newDefaultValue = newDefaultValue.split(',');
       newDefaultValue = [
         moment(parseInt(newDefaultValue[0], 10)),
         moment(parseInt(newDefaultValue[1], 10)),
       ];
-    }
+    } */
     return (
       // initialValue: defaultValue && defaultValue[id] && newDefaultValue
       <FormItem
@@ -167,11 +167,11 @@ export class ItemCascader extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule, options } = this.props;
-    let newDefaultValue = defaultValue[id.trim()];
+    const { id, name, layout, /* form, */ defaultValue, disabled, rule, options } = this.props;
+    /* let newDefaultValue = defaultValue[id.trim()];
     if (newDefaultValue) {
       newDefaultValue = newDefaultValue.split(',');
-    }
+    } */
     return (
       // initialValue: defaultValue && defaultValue[id.trim()] && newDefaultValue
       <FormItem
@@ -190,17 +190,17 @@ export class ItemCheckBox extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule, options } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule, options } = this.props;
     let newOptions = options;
     if (!newOptions[0].label && newOptions[0].key) {
       newOptions.forEach((item) => {
         item.label = item.key;
       });
     }
-    let newDefaultValue = defaultValue[id.trim()];
+    /* let newDefaultValue = defaultValue[id.trim()];
     if (newDefaultValue) {
       newDefaultValue = newDefaultValue.split(',');
-    }
+    } */
     return (
       // initialValue: defaultValue && defaultValue[id.trim()] && newDefaultValue
       <FormItem
@@ -224,14 +224,14 @@ export class ItemRadio extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule, options } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule, options } = this.props;
     let newOptions = options;
     if (!newOptions[0].label && newOptions[0].key) {
       newOptions.forEach((item) => {
         item.label = item.key;
       });
     }
-    let newDefaultValue = defaultValue[id.trim()];
+    // let newDefaultValue = defaultValue[id.trim()];
     return (
       // initialValue: defaultValue && defaultValue[id.trim()] && newDefaultValue
       <FormItem
@@ -255,7 +255,7 @@ export class ItemSwitch extends PureComponent {
   state = {};
 
   render() {
-    const { id, name, layout, form, defaultValue, disabled, rule, text } = this.props;
+    const { id, name, layout, /* form, defaultValue, */ disabled, rule, text } = this.props;
     return (
       // initialValue: defaultValue && defaultValue[id.trim()]
       <FormItem
