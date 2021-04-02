@@ -90,7 +90,7 @@ class ModalForm extends Component {
   };
   imageChange = ({ fileList }) => this.setState({ fileList });
   clear = () => {
-    this.props.form.resetFields();
+    this.formRef.current.resetFields();
   };
 
   render() {

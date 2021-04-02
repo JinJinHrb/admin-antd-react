@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Select, Button, DatePicker } from 'antd';
+import { Row, Col, Form, Button, DatePicker } from 'antd';
 import { ItemInput, ItemSelect } from '../../component/FormItemComponent';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
 import styles from './search.less';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import Loading3QuartersOutlined from '@ant-design/icons/Loading3QuartersOutlined';
 import DownOutlined from '@ant-design/icons/DownOutlined';
 import UpOutlined from '@ant-design/icons/UpOutlined';
+import classNames from 'classnames';
 
 const FormItem = Form.Item;
-const { Option } = Select;
+// const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 // class HehTable extends Component {
@@ -70,7 +69,7 @@ class Search extends Component {
 
   reset = () => {
     this.setState({ reset: true });
-    this.props.form.resetFields();
+    this.formRef.current.resetFields(); // WangFan TODO 2021-04-02 19:01:28
     this.props.getSearchValue();
   };
 
@@ -86,7 +85,7 @@ class Search extends Component {
     return 'xs';
   };
 
-  hehInput = (layout, item, index, disabled, defaultValue) => {
+  hehInput = (layout, item, index, disabled) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
     return (
@@ -100,19 +99,12 @@ class Search extends Component {
           display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
         }}
       >
-        <ItemInput
-          id={item.id}
-          name={item.name}
-          layout={layout}
-          form={this.props.form}
-          disabled={disabled}
-          defaultValue={this.state.reset !== true ? defaultValue : null}
-        />
+        <ItemInput id={item.id} name={item.name} layout={layout} disabled={disabled} />
       </Col>
     );
   };
 
-  hehSelect = (layout, item, index, disabled, defaultValue) => {
+  hehSelect = (layout, item, index, disabled) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
     return (
@@ -131,23 +123,16 @@ class Search extends Component {
           name={item.name}
           options={item.options}
           layout={layout}
-          form={this.props.form}
           disabled={disabled}
           rule={{ required: false }}
-          defaultValue={this.state.reset !== true ? defaultValue : null}
         />
       </Col>
     );
   };
 
-  hehData = (layout, item, index, defaultValue) => {
+  hehData = (layout, item, index) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
-    let newDefaultValue;
-    if (defaultValue && defaultValue[item.id]) {
-      let defaultValueArr = defaultValue[item.id];
-      newDefaultValue = moment(defaultValueArr);
-    }
     return (
       <Col
         xs={24}
@@ -159,7 +144,6 @@ class Search extends Component {
           display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
         }}
       >
-        {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
         <FormItem name={item.id} {...layout} label={item.name}>
           <DatePicker placeholder="请选择日期" style={{ width: '100%' }} />
         </FormItem>
@@ -167,14 +151,9 @@ class Search extends Component {
     );
   };
 
-  hehRangeData = (layout, item, index, defaultValue) => {
+  hehRangeData = (layout, item, index) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
-    let newDefaultValue = [];
-    if (defaultValue) {
-      let defaultValueArr = defaultValue[item.id];
-      newDefaultValue = [moment(defaultValueArr[0]), moment(defaultValueArr[1])];
-    }
     return (
       <Col
         xs={24}
@@ -186,7 +165,6 @@ class Search extends Component {
           display: this.state.expand ? 'inline-block' : index + 1 > size ? 'none' : 'inline-block',
         }}
       >
-        {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
         <FormItem name={item.id} {...layout} label={item.name}>
           <RangePicker placeholder={['开始时间', '结束时间']} style={{ width: '100%' }} />
         </FormItem>
@@ -195,7 +173,7 @@ class Search extends Component {
   };
 
   render() {
-    const { options, searchLoading, defaultValue } = this.props;
+    const { options, searchLoading } = this.props;
     const { expand } = this.state;
     const layout = {
       labelCol: { sm: { span: 6 }, xl: { span: 6 }, xxl: { span: 6 } },
@@ -203,25 +181,22 @@ class Search extends Component {
     };
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
+    const searchClassNames = classNames(styles['search-form']);
     return (
       <Row>
-        <Form
-          /* onSubmit={this.submit} */
-          onFinish={this.submit}
-          ref={this.formRef}
-        >
+        <Form onFinish={this.submit} ref={this.formRef} className={searchClassNames}>
           {/*组件*/}
           <Row>
             {options &&
               options.map((item, index) => {
                 return item.type === 'input'
-                  ? this.hehInput(layout, item, index, false, defaultValue)
+                  ? this.hehInput(layout, item, index, false)
                   : item.type === 'select'
-                  ? this.hehSelect(layout, item, index, false, defaultValue)
+                  ? this.hehSelect(layout, item, index, false)
                   : item.type === 'date'
-                  ? this.hehData(layout, item, index, defaultValue)
+                  ? this.hehData(layout, item, index)
                   : item.type === 'rangeDate'
-                  ? this.hehRangeData(layout, item, index, defaultValue)
+                  ? this.hehRangeData(layout, item, index)
                   : '';
               })}
           </Row>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Card, Divider, Popconfirm, Row } from 'antd';
+import { Button, Card, Divider, Popconfirm, Row, ConfigProvider } from 'antd';
 import { connect } from 'dva';
 import moment from 'moment';
 import Table from '../../component/Table';
 import { NewForm } from '../../component/NewForm';
 import Search from '../../component/Search';
+import zhCN from 'antd/lib/locale/zh_CN';
 
 const modelFindPage = 'roleToNamespace/findPage';
 const modelFindObject = 'roleToNamespace/findObject';
@@ -163,7 +164,7 @@ class Index extends Component {
 
     const columns = [
       { title: 'id', dataIndex: 'id' },
-      { title: '角色名称', dataIndex: 'role_name' },
+      { title: 'I角色名称', dataIndex: 'role_name' },
       { title: '角色描述', dataIndex: 'role_introduce' },
       {
         title: '创建时间',
@@ -206,89 +207,98 @@ class Index extends Component {
     const { editStatus } = this.state;
 
     return (
-      <div style={{ margin: 20 }}>
-        {/* ===========================新增/编辑模态窗口 start=========================== */}
-        <NewForm
-          visible={this.state.visible}
-          onCancel={this.eventSubmitCancel}
-          onOk={this.eventSubmitOk}
-          detailLoading={editStatus ? detailLoading : false}
-          submitLoading={updateLoading || addLoading}
-          defaultValue={defaultValue}
-          disabled={this.state.disabled}
-          options={[
-            {
-              rule: { required: true, whitespace: true, max: 10, min: 2 },
-              name: '角色名称',
-              id: 'role_name',
-              type: 'input',
-            },
-            { rule: { required: false }, name: '角色描述', id: 'role_introduce', type: 'textarea' },
-          ]}
-        />
-        {/* ===========================新增/编辑模态窗口 end=========================== */}
-
-        {/* ===========================搜索区 start=========================== */}
-        <Card>
-          <Search
-            row={4}
-            searchLoading={pageLoading}
-            getSearchValue={this.eventSearchValue}
+      <ConfigProvider locale={zhCN}>
+        <div style={{ margin: 20 }}>
+          {/* ===========================新增/编辑模态窗口 start=========================== */}
+          <NewForm
+            visible={this.state.visible}
+            onCancel={this.eventSubmitCancel}
+            onOk={this.eventSubmitOk}
+            detailLoading={editStatus ? detailLoading : false}
+            submitLoading={updateLoading || addLoading}
+            defaultValue={defaultValue}
+            disabled={this.state.disabled}
             options={[
-              { key: '1', id: 'id', type: 'input', name: 'id' },
               {
-                key: '2',
+                rule: { required: true, whitespace: true, max: 10, min: 2 },
+                name: 'II角色名称',
                 id: 'role_name',
-                type: 'select',
-                name: '角色名称',
-                options: [
-                  { key: 'admin', value: '管理员' },
-                  { key: 'ordinary', value: '普通人员' },
-                ],
+                type: 'input',
               },
               {
-                key: '3',
-                id: 'create_date',
-                type: 'rangeDate',
-                name: '创建时间',
-                format: 'YYYY-MM-DD',
+                rule: { required: false },
+                name: '角色描述',
+                id: 'role_introduce',
+                type: 'textarea',
               },
-              { key: '4', id: 'birthday_date', type: 'date', name: '生日', format: 'YYYY-MM-DD' },
             ]}
           />
-        </Card>
-        {/* ===========================搜索区 end=========================== */}
+          {/* ===========================新增/编辑模态窗口 end=========================== */}
 
-        {/* ===========================表格数据区 start=========================== */}
-        <Card style={{ marginTop: 20 }}>
-          <Row>
-            <Button onClick={() => this.setState({ visible: true })} type="primary">
-              新建
-            </Button>
-            <span style={{ padding: 5 }} />
-            <Button
-              loading={batchDeleteLoading}
-              onClick={() => this.serviceBatchDelete(undefined)}
-              style={{ display: this.state.selectedRowKeys.length !== 0 ? 'inline-block' : 'none' }}
-            >
-              批量删除这{this.state.selectedRowKeys.length}条
-            </Button>
-          </Row>
-          <Row style={{ marginTop: 5, minHeight: '100%' }}>
-            <Table
-              bordered
-              size="default"
-              onShowSizeChange={this.eventShowSizeChange}
-              pageChange={this.eventPageChange}
-              selectedRowKeys={this.eventSelectedRowKeys}
-              dataSource={tableData}
-              loading={pageLoading}
-              columns={columns}
+          {/* ===========================搜索区 start=========================== */}
+          <Card>
+            <Search
+              row={4}
+              searchLoading={pageLoading}
+              getSearchValue={this.eventSearchValue}
+              options={[
+                { key: '1', id: 'id', type: 'input', name: 'id' },
+                {
+                  key: '2',
+                  id: 'role_name',
+                  type: 'select',
+                  name: 'III角色名称',
+                  options: [
+                    { key: 'admin', value: '管理员' },
+                    { key: 'ordinary', value: '普通人员' },
+                  ],
+                },
+                {
+                  key: '3',
+                  id: 'create_date',
+                  type: 'rangeDate',
+                  name: '创建时间',
+                  format: 'YYYY-MM-DD',
+                },
+                { key: '4', id: 'birthday_date', type: 'date', name: '生日', format: 'YYYY-MM-DD' },
+              ]}
             />
-          </Row>
-        </Card>
-        {/* ===========================表格数据区 end=========================== */}
-      </div>
+          </Card>
+          {/* ===========================搜索区 end=========================== */}
+
+          {/* ===========================表格数据区 start=========================== */}
+          <Card style={{ marginTop: 20 }}>
+            <Row>
+              <Button onClick={() => this.setState({ visible: true })} type="primary">
+                新建
+              </Button>
+              <span style={{ padding: 5 }} />
+              <Button
+                loading={batchDeleteLoading}
+                onClick={() => this.serviceBatchDelete(undefined)}
+                style={{
+                  display: this.state.selectedRowKeys.length !== 0 ? 'inline-block' : 'none',
+                }}
+              >
+                批量删除这{this.state.selectedRowKeys.length}条
+              </Button>
+            </Row>
+            <Row style={{ marginTop: 5, minHeight: '100%' }}>
+              <Table
+                bordered
+                size="default"
+                onShowSizeChange={this.eventShowSizeChange}
+                pageChange={this.eventPageChange}
+                selectedRowKeys={this.eventSelectedRowKeys}
+                dataSource={tableData}
+                loading={pageLoading}
+                columns={columns}
+              />
+            </Row>
+          </Card>
+          {/* ===========================表格数据区 end=========================== */}
+        </div>
+      </ConfigProvider>
     );
   }
 

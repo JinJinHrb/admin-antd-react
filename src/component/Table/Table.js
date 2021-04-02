@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Table, ConfigProvider } from 'antd';
 // import zhCN from 'antd/lib/locale-provider/zh_CN';
 import zhCN from 'antd/lib/locale/zh_CN';
+import classNames from 'classnames';
+import styles from './table.less';
 
 export default class HehTable extends Component {
   constructor() {
@@ -35,10 +37,11 @@ export default class HehTable extends Component {
       selectedRowKeys: this.state.selectedRowKeys,
       onChange: this.onSelectChange,
     };
+    const tableClassNames = classNames({ [styles.antTableWrapper]: true });
     return (
       <ConfigProvider locale={zhCN}>
         <Table
-          style={{ background: '#FFF' }}
+          className={tableClassNames}
           size={size}
           bordered={bordered}
           dataSource={dataSource && dataSource.items}
