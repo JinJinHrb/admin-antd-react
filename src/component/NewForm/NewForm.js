@@ -128,7 +128,7 @@ class ModalForm extends Component {
         ]}
       >
         <Spin spinning={detailLoading}>
-          <Form layout="vertical" defaultValues={defaultValue} ref={this.formRef}>
+          <Form layout="vertical" initialValues={defaultValue} ref={this.formRef}>
             {options &&
               options.map((item) => {
                 return item.type === 'textarea' ? (
@@ -228,7 +228,7 @@ class ModalForm extends Component {
                   />
                 ) : item.type === 'uploadImg' ? (
                   <FormItem
-                    htmlFor={item.id}
+                    name={item.id}
                     key={item.key}
                     label={item.name}
                     rules={[{ required: item.required, message: '必填项未填' }]}

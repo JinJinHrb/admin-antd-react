@@ -160,7 +160,7 @@ class Search extends Component {
         }}
       >
         {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
-        <FormItem htmlFor={item.id} {...layout} label={item.name}>
+        <FormItem name={item.id} {...layout} label={item.name}>
           <DatePicker placeholder="请选择日期" style={{ width: '100%' }} />
         </FormItem>
       </Col>
@@ -187,7 +187,7 @@ class Search extends Component {
         }}
       >
         {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
-        <FormItem htmlFor={item.id} {...layout} label={item.name}>
+        <FormItem name={item.id} {...layout} label={item.name}>
           <RangePicker placeholder={['开始时间', '结束时间']} style={{ width: '100%' }} />
         </FormItem>
       </Col>
