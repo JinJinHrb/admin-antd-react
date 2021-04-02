@@ -3,7 +3,7 @@ import { Menu, Spin } from 'antd';
 import { Link } from 'umi';
 import { getMenu } from '../common/menu';
 import _L from 'lodash';
-import DynamicIcon from '../component/DynamicIcon/DynamicIcon';
+import { getDynamicIcon } from '../component/DynamicIcon/dynamicIcon';
 
 const SubMenu = Menu.SubMenu;
 
@@ -82,6 +82,7 @@ class Side extends Component {
 const MenuItem = (data) => {
   const icon = _L.trim(data.icon);
   const iconKey = icon ? _L.upperFirst(_L.camelCase(icon)) + 'Outlined' : '';
+  const DynamicIcon = getDynamicIcon(iconKey);
   return (
     <Menu.Item key={data.path}>
       <Link to={data.path}>
@@ -95,6 +96,7 @@ const MenuItem = (data) => {
 const SubMenuItem = (data) => {
   const icon = _L.trim(data.icon);
   const iconKey = icon ? _L.upperFirst(_L.camelCase(icon)) + 'Outlined' : '';
+  const DynamicIcon = getDynamicIcon(iconKey);
   return (
     <SubMenu
       key={data.name}

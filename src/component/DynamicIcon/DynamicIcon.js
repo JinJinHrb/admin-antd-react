@@ -1,11 +1,10 @@
 import loadable from '@loadable/component';
 
-const DynamicIcon = loadable((props) =>
-  props.type
-    ? import(`@ant-design/icons/es/icons/${props.type}.js`).catch((err) =>
-        import(`@ant-design/icons/es/icons/WarningOutlined.js`)
-      )
-    : null
-);
-
-export default DynamicIcon;
+export const getDynamicIcon = (type) =>
+  loadable(() =>
+    type
+      ? import(`@ant-design/icons/es/icons/${type}.js`).catch((err) =>
+          import(`@ant-design/icons/es/icons/WarningOutlined.js`)
+        )
+      : import(`@ant-design/icons/es/icons/WarningOutlined.js`)
+  );

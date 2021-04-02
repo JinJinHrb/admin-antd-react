@@ -34,12 +34,10 @@ const stepDownIfConditionSatisfiedPromise = (conditionHandler, options) => {
       times = 0;
     }
     times++;
-    // console.log(new Date(), '#20 times = ' + times);
     if (conditionHandler()) {
       return rsv(null);
     }
     if (options.maxRetryTimes && times > options.maxRetryTimes) {
-      // console.log(new Date(), 'stepDownIfConditionSatisfiedPromise #24');
       if (options.overtimeHandler) {
         options.overtimeHandler.call(null, rsv, rej, times);
       } else {
@@ -47,7 +45,6 @@ const stepDownIfConditionSatisfiedPromise = (conditionHandler, options) => {
       }
     } else {
       return setTimeout(function () {
-        // console.log(new Date(), '#32 times = ' + times);
         recurHandler(rsv, rej, times);
       }, recurInterval);
     }
