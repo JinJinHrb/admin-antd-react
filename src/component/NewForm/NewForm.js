@@ -97,7 +97,6 @@ class ModalForm extends Component {
     const { onSubmit } = this;
     const {
       title,
-      formIdx = '0',
       visible,
       onCancel,
       options,
@@ -106,7 +105,6 @@ class ModalForm extends Component {
       detailLoading,
       submitLoading,
     } = this.props;
-    const formKey = `refs_newForm_${formIdx}`;
     const onPreview = (file) => {
       // window.open(api.target + api.imageShow + file.response.images[0].uri);
     };
@@ -123,12 +121,7 @@ class ModalForm extends Component {
             取消
           </Button>,
           !disabled ? (
-            <Button
-              loading={submitLoading}
-              key="2"
-              onClick={onSubmit.bind(this, formKey)}
-              type="primary"
-            >
+            <Button loading={submitLoading} key="2" onClick={onSubmit} type="primary">
               确定
             </Button>
           ) : null,
@@ -141,7 +134,6 @@ class ModalForm extends Component {
                 return item.type === 'textarea' ? (
                   <ItemTextArea
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -151,7 +143,6 @@ class ModalForm extends Component {
                 ) : item.type === 'date' ? (
                   <ItemDate
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     rule={item.rule}
                     name={item.name}
@@ -161,7 +152,6 @@ class ModalForm extends Component {
                 ) : item.type === 'input' ? (
                   <ItemInput
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -171,7 +161,6 @@ class ModalForm extends Component {
                 ) : item.type === 'numberInput' ? (
                   <ItemNumber
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -181,7 +170,6 @@ class ModalForm extends Component {
                 ) : item.type === 'select' ? (
                   <ItemSelect
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -192,7 +180,6 @@ class ModalForm extends Component {
                 ) : item.type === 'rangeDate' ? (
                   <ItemRangeDate
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -202,7 +189,6 @@ class ModalForm extends Component {
                 ) : item.type === 'cascader' ? (
                   <ItemCascader
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -213,7 +199,6 @@ class ModalForm extends Component {
                 ) : item.type === 'checkbox' ? (
                   <ItemCheckBox
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -224,7 +209,6 @@ class ModalForm extends Component {
                 ) : item.type === 'radio' ? (
                   <ItemRadio
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -235,7 +219,6 @@ class ModalForm extends Component {
                 ) : item.type === 'switch' ? (
                   <ItemSwitch
                     key={item.id}
-                    formIdx={formIdx}
                     id={item.id}
                     text={item.text}
                     name={item.name}
