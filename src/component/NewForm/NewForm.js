@@ -238,9 +238,9 @@ class ModalForm extends Component {
                   />
                 ) : item.type === 'uploadImg' ? (
                   <FormItem
+                    htmlFor={item.id}
                     key={item.key}
                     label={item.name}
-                    name={item.id}
                     rules={[{ required: item.required, message: '必填项未填' }]}
                   >
                     <Upload

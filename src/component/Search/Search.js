@@ -23,9 +23,14 @@ class Search extends Component {
     };
   }
 
-  submit = (e) => {
+  submit = (formKey, e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    const form = this[formKey];
+    if (!form) {
+      return;
+    }
+    // this.props.form.validateFields((err, values) => {
+    form.validateFields((err, values) => {
       if (!err) {
         const options = this.props.options;
         options &&
@@ -154,7 +159,7 @@ class Search extends Component {
         }}
       >
         {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
-        <FormItem name={item.id} {...layout} label={item.name}>
+        <FormItem htmlFor={item.id} {...layout} label={item.name}>
           <DatePicker placeholder="请选择日期" style={{ width: '100%' }} />
         </FormItem>
       </Col>
@@ -180,7 +185,7 @@ class Search extends Component {
         }}
       >
         {/* initialValue: this.state.reset !== true ? newDefaultValue : null */}
-        <FormItem name={item.id} {...layout} label={item.name}>
+        <FormItem htmlFor={item.id} {...layout} label={item.name}>
           <RangePicker placeholder={['开始时间', '结束时间']} style={{ width: '100%' }} />
         </FormItem>
       </Col>
@@ -188,7 +193,7 @@ class Search extends Component {
   };
 
   render() {
-    const { options, searchLoading, defaultValue } = this.props;
+    const { options, searchLoading, defaultValue, formIdx = '0' } = this.props;
     const { expand } = this.state;
     const layout = {
       labelCol: { sm: { span: 6 }, xl: { span: 6 }, xxl: { span: 6 } },
@@ -196,9 +201,16 @@ class Search extends Component {
     };
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
+    const formKey = `refs_form_${formIdx}`;
+    debugger;
     return (
       <Row>
-        <Form onSubmit={this.submit}>
+        <Form
+          onSubmit={this.submit.bind(this, formKey)}
+          ref={(el) => {
+            this[`refs_form_${formIdx}`] = el;
+          }}
+        >
           {/*组件*/}
           <Row>
             {options &&
@@ -220,7 +232,7 @@ class Search extends Component {
               <Button
                 loading={searchLoading}
                 htmlType="submit"
-                onClick={this.submit}
+                onClick={this.submit.bind(this, formKey)}
                 type="primary"
                 icon={<SearchOutlined />}
               >

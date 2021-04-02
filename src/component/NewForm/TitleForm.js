@@ -56,7 +56,7 @@ class TitleForm extends Component {
                   {item.option.map((data) => {
                     return data.type === 'input' ? (
                       <FormItem
-                        name={data.id}
+                        htmlFor={data.id}
                         {...formItemLayout}
                         key={data.key}
                         style={{ display: 'inline-block', width: '49%' }}
@@ -66,7 +66,7 @@ class TitleForm extends Component {
                       </FormItem>
                     ) : data.type === 'select' ? (
                       <FormItem
-                        name={data.id}
+                        htmlFor={data.id}
                         {...formItemLayout}
                         key={data.key}
                         style={{ display: 'inline-block', width: '49%' }}

@@ -28,7 +28,7 @@ export class ItemInput extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id],
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[
@@ -53,7 +53,7 @@ export class ItemTextArea extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -76,7 +76,7 @@ export class ItemSelect extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -102,7 +102,7 @@ export class ItemDate extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id] && moment(defaultValue[id])
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -121,7 +121,7 @@ export class ItemNumber extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id]
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -148,7 +148,7 @@ export class ItemRangeDate extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id] && newDefaultValue
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -175,7 +175,7 @@ export class ItemCascader extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id.trim()] && newDefaultValue
       <FormItem
-        name={id.trim()}
+        htmlFor={id.trim()}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -204,7 +204,7 @@ export class ItemCheckBox extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id.trim()] && newDefaultValue
       <FormItem
-        name={id.trim()}
+        htmlFor={id.trim()}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -235,7 +235,7 @@ export class ItemRadio extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id.trim()] && newDefaultValue
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}
@@ -259,7 +259,7 @@ export class ItemSwitch extends PureComponent {
     return (
       // initialValue: defaultValue && defaultValue[id.trim()]
       <FormItem
-        name={id}
+        htmlFor={id}
         label={name}
         {...layout}
         rules={[{ required: rule && !!rule.required, message: '必填项未填' }]}

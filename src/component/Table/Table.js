@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale-provider/zh_CN';
+// import zhCN from 'antd/lib/locale-provider/zh_CN';
+import zhCN from 'antd/lib/locale/zh_CN';
 
 export default class HehTable extends Component {
   constructor() {
