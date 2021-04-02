@@ -23,63 +23,61 @@ class Search extends Component {
     };
   }
 
-  submit = (formKey, e) => {
+  formRef = React.createRef();
+
+  submit = (e) => {
     e.preventDefault();
-    const form = this[formKey];
-    if (!form) {
-      return;
-    }
-    // this.props.form.validateFields((err, values) => {
-    form.validateFields((err, values) => {
-      if (!err) {
-        const options = this.props.options;
-        options &&
-          options.forEach((item) => {
-            switch (item.type) {
-              case 'date':
-                if (values[`${item.id}`]) {
-                  values[`${item.id}`] = values[`${item.id}`].format(
-                    item.format || 'YYYY-MM-DD HH:mm:ss'
-                  );
-                }
-                break;
-              case 'rangeDate':
-                if (values[item.id]) {
-                  const min_create_date = values[item.id][0].valueOf();
-                  const max_create_date = values[item.id][1].valueOf();
-                  values[item.id][0] = values[item.id][0].format(
-                    item.format || 'YYYY-MM-DD HH:mm:ss'
-                  );
-                  values[item.id][1] = values[item.id][1].format(
-                    item.format || 'YYYY-MM-DD HH:mm:ss'
-                  );
-                  values['min_create_date'] = min_create_date;
-                  values['max_create_date'] = max_create_date;
-                }
-                break;
-              default:
-                break;
-            }
-          });
-        for (let i in values) {
-          if (values.hasOwnProperty(i)) {
-            if (values[i] === undefined || values[i] === 'created' || values[i] === null) {
-              delete values[i];
-            }
+    this.formRef.current.validateFields().then((values) => {
+      const options = this.props.options;
+      options &&
+        options.forEach((item) => {
+          switch (item.type) {
+            case 'date':
+              if (values[`${item.id}`]) {
+                values[`${item.id}`] = values[`${item.id}`].format(
+                  item.format || 'YYYY-MM-DD HH:mm:ss'
+                );
+              }
+              break;
+            case 'rangeDate':
+              if (values[item.id]) {
+                const min_create_date = values[item.id][0].valueOf();
+                const max_create_date = values[item.id][1].valueOf();
+                values[item.id][0] = values[item.id][0].format(
+                  item.format || 'YYYY-MM-DD HH:mm:ss'
+                );
+                values[item.id][1] = values[item.id][1].format(
+                  item.format || 'YYYY-MM-DD HH:mm:ss'
+                );
+                values['min_create_date'] = min_create_date;
+                values['max_create_date'] = max_create_date;
+              }
+              break;
+            default:
+              break;
+          }
+        });
+      for (let i in values) {
+        if (values.hasOwnProperty(i)) {
+          if (values[i] === undefined || values[i] === 'created' || values[i] === null) {
+            delete values[i];
           }
         }
-        this.props.getSearchValue(values);
       }
+      this.props.getSearchValue(values);
     });
   };
+
   reset = () => {
     this.setState({ reset: true });
     this.props.form.resetFields();
     this.props.getSearchValue();
   };
+
   expand = () => {
     this.setState({ expand: !this.state.expand });
   };
+
   JudgeWidth = () => {
     const width = document.body.clientWidth;
     if (width >= 1600) return 'xxl';
@@ -87,6 +85,7 @@ class Search extends Component {
     if (width >= 768) return 'md';
     return 'xs';
   };
+
   hehInput = (layout, item, index, disabled, defaultValue) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
@@ -112,6 +111,7 @@ class Search extends Component {
       </Col>
     );
   };
+
   hehSelect = (layout, item, index, disabled, defaultValue) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
@@ -139,6 +139,7 @@ class Search extends Component {
       </Col>
     );
   };
+
   hehData = (layout, item, index, defaultValue) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
@@ -165,6 +166,7 @@ class Search extends Component {
       </Col>
     );
   };
+
   hehRangeData = (layout, item, index, defaultValue) => {
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
@@ -193,7 +195,7 @@ class Search extends Component {
   };
 
   render() {
-    const { options, searchLoading, defaultValue, formIdx = '0' } = this.props;
+    const { options, searchLoading, defaultValue } = this.props;
     const { expand } = this.state;
     const layout = {
       labelCol: { sm: { span: 6 }, xl: { span: 6 }, xxl: { span: 6 } },
@@ -201,15 +203,12 @@ class Search extends Component {
     };
     const sizeGrade = { xs: 1, md: 2, xl: 3, xxl: 4 };
     const size = sizeGrade[this.JudgeWidth()];
-    const formKey = `refs_form_${formIdx}`;
-    debugger;
     return (
       <Row>
         <Form
-          onSubmit={this.submit.bind(this, formKey)}
-          ref={(el) => {
-            this[`refs_form_${formIdx}`] = el;
-          }}
+          /* onSubmit={this.submit} */
+          onFinish={this.submit}
+          ref={this.formRef}
         >
           {/*组件*/}
           <Row>
@@ -232,7 +231,7 @@ class Search extends Component {
               <Button
                 loading={searchLoading}
                 htmlType="submit"
-                onClick={this.submit.bind(this, formKey)}
+                onClick={this.submit}
                 type="primary"
                 icon={<SearchOutlined />}
               >

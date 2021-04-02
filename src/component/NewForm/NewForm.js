@@ -28,6 +28,8 @@ class ModalForm extends Component {
     };
   }
 
+  formRef = React.createRef();
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.visible === false) {
       tag = true;
@@ -43,8 +45,7 @@ class ModalForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (err) return;
+    this.formRef.current.validateFields().then((values) => {
       let { defaultValue, options } = this.props;
       options.forEach((item) => {
         if (item.type === 'date') {
@@ -96,7 +97,7 @@ class ModalForm extends Component {
     const { onSubmit } = this;
     const {
       title,
-      form,
+      formIdx = '0',
       visible,
       onCancel,
       options,
@@ -105,6 +106,7 @@ class ModalForm extends Component {
       detailLoading,
       submitLoading,
     } = this.props;
+    const formKey = `refs_newForm_${formIdx}`;
     const onPreview = (file) => {
       // window.open(api.target + api.imageShow + file.response.images[0].uri);
     };
@@ -121,20 +123,25 @@ class ModalForm extends Component {
             取消
           </Button>,
           !disabled ? (
-            <Button loading={submitLoading} key="2" onClick={onSubmit} type="primary">
+            <Button
+              loading={submitLoading}
+              key="2"
+              onClick={onSubmit.bind(this, formKey)}
+              type="primary"
+            >
               确定
             </Button>
           ) : null,
         ]}
       >
         <Spin spinning={detailLoading}>
-          <Form layout="vertical" defaultValues={defaultValue}>
+          <Form layout="vertical" defaultValues={defaultValue} ref={this.formRef}>
             {options &&
               options.map((item) => {
                 return item.type === 'textarea' ? (
                   <ItemTextArea
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -144,7 +151,7 @@ class ModalForm extends Component {
                 ) : item.type === 'date' ? (
                   <ItemDate
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     rule={item.rule}
                     name={item.name}
@@ -154,7 +161,7 @@ class ModalForm extends Component {
                 ) : item.type === 'input' ? (
                   <ItemInput
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -164,7 +171,7 @@ class ModalForm extends Component {
                 ) : item.type === 'numberInput' ? (
                   <ItemNumber
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -174,7 +181,7 @@ class ModalForm extends Component {
                 ) : item.type === 'select' ? (
                   <ItemSelect
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -185,7 +192,7 @@ class ModalForm extends Component {
                 ) : item.type === 'rangeDate' ? (
                   <ItemRangeDate
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     name={item.name}
                     rule={item.rule}
@@ -195,7 +202,7 @@ class ModalForm extends Component {
                 ) : item.type === 'cascader' ? (
                   <ItemCascader
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -206,7 +213,7 @@ class ModalForm extends Component {
                 ) : item.type === 'checkbox' ? (
                   <ItemCheckBox
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -217,7 +224,7 @@ class ModalForm extends Component {
                 ) : item.type === 'radio' ? (
                   <ItemRadio
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     options={item.options}
                     name={item.name}
@@ -228,7 +235,7 @@ class ModalForm extends Component {
                 ) : item.type === 'switch' ? (
                   <ItemSwitch
                     key={item.id}
-                    form={form}
+                    formIdx={formIdx}
                     id={item.id}
                     text={item.text}
                     name={item.name}
