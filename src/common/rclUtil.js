@@ -3,11 +3,20 @@ import _L from 'lodash';
 /** 验证日期格式正则表达式 */
 const _validateDateStringExpArr = [
   /^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$/,
-  /^\d{4}[/-](0?[1-9]|1[012])[/-](0?[1-9]|[12][0-9]|3[01])$/, // format: yyyy-mm-dd //  /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/ // format: dd/mm/yyyy
-  /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/, // format: yyyy-mm-dd hh:mi
-  /^((\d{2}(([02468][048])|([13579][26]))[-/\s]?((((0?[13578])|(1[02]))[-/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[-/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[-/\s]?((0?[1-9])|([1-2][0-9])))))|(\d{2}(([02468][1235679])|([13579][01345789]))[-/\s]?((((0?[13578])|(1[02]))[-/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[-/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[-/\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\s((([0-1][0-9])|(2?[0-3])):([0-5]?[0-9])((\s)|(:([0-5]?[0-9])))))?$/, // format: yyyy-mm-dd hh:mi:ss
-  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/, // format: yyyy-mm-ddThh:mi:ss.fffZ
+
+  // format: yyyy-mm-dd // /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/ // format: dd/mm/yyyy
+  /^\d{4}[/-](0?[1-9]|1[012])[/-](0?[1-9]|[12][0-9]|3[01])$/,
+
+  // format: yyyy-mm-dd hh:mi
+  /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/,
+
+  // format: yyyy-mm-dd hh:mi:ss
+  /^((\d{2}(([02468][048])|([13579][26]))[-/\s]?((((0?[13578])|(1[02]))[-/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[-/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[-/\s]?((0?[1-9])|([1-2][0-9])))))|(\d{2}(([02468][1235679])|([13579][01345789]))[-/\s]?((((0?[13578])|(1[02]))[-/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[-/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[-/\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\s((([0-1][0-9])|(2?[0-3])):([0-5]?[0-9])((\s)|(:([0-5]?[0-9])))))?$/,
+
+  // format: yyyy-mm-ddThh:mi:ss.fffZ
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
 ];
+
 const oType = (o) => {
   return o === null ? 'null' : typeof o;
 };
@@ -90,7 +99,6 @@ const setDeepVal = (data, keyArr, newValue) => {
   if (oType(lastKey) === 'undefined') {
     console.error('setDeepVal ERROR - lastKey is undefined:', data, keyArr, newValue);
   }
-  const lastSecondObj = keyArr2.length > 0 ? getDeepVal(data, keyArr2) : data;
   for (let i = 0, ref = data; i < keyArr2.length; i++) {
     const subKey = keyArr2[i];
     const tmp = ref[subKey];
@@ -98,13 +106,12 @@ const setDeepVal = (data, keyArr, newValue) => {
       ref = ref[subKey] = {};
     } else if (oType(tmp) === 'object') {
       ref = tmp;
-    } else {
-      if (!lastSecondObj || oType(lastSecondObj) !== 'object') {
-        console.error('setDeepVal ERROR #382 lastSecondObj is not object:', data, keyArr, newValue);
-        return;
-      }
-      return;
     }
+  }
+  const lastSecondObj = keyArr2.length > 0 ? getDeepVal(data, keyArr2) : data;
+  if (!lastSecondObj || oType(lastSecondObj) !== 'object') {
+    console.error('setDeepVal ERROR #382 lastSecondObj is not object:', data, keyArr, newValue);
+    return;
   }
   lastSecondObj[lastKey] = newValue;
 };
@@ -237,7 +244,7 @@ export default {
   setDeepVal,
   getDeepVal,
   getDatetimeFlag,
-  parseDatetimeStrByFlag,
   oType,
+  parseDatetimeStrByFlag,
   stepDownIfConditionSatisfiedPromise,
 };
